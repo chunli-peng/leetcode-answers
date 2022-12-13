@@ -1,7 +1,7 @@
 class Solution:
     """
     Approach 1: Sorting + Slicing
-    time: O(nlogn), space: O(1)
+    time: O(nlogn), space: O(logn) for sorting
     """
     def rearrangeArray(self, nums: List[int]) -> List[int]:
         n = len(nums)
