@@ -36,7 +36,7 @@ class Solution:
 
 class Solution:
     """
-    Approach 3: Two Pointer
+    Approach 3: Two Pointers
     time: O(n), space: O(1)
     """
     def trap(self, height: List[int]) -> int:

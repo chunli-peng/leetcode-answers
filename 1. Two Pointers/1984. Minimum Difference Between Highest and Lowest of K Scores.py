@@ -1,8 +1,7 @@
 class Solution:
     """
     Approach 1: Sliding Window
-    time: O(nlogn)
-    space: O(nlogn), space: O(logn) for sorting
+    time: O(nlogn), space: O(logn) for sorting
     """
     def minimumDifference(self, nums: List[int], k: int) -> int:
         nums.sort()

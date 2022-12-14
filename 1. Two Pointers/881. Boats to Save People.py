@@ -1,6 +1,6 @@
 class Solution:
     """
-    Approach 1: Greedy (Two Pointer)
+    Approach 1: Greedy (Two Pointers)
     time: O(nlogn), space: O(logn) for sorting
     """
     def numRescueBoats(self, people: List[int], limit: int) -> int:

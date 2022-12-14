@@ -19,7 +19,7 @@ class Solution:
 
 class Solution:
     """
-    Approach 2: Two Pointer
+    Approach 2: Two Pointers
     time: O(n), space: O(1)
     """
     def twoSum(self, numbers: List[int], target: int) -> List[int]:

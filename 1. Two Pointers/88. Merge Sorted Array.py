@@ -1,6 +1,6 @@
 class Solution:
     """
-    Approach 1: two pointer
+    Approach 1: two pointers
     time: O(m+n), space: O(1)
     """
     def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
