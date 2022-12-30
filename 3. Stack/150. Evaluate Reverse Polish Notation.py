@@ -8,7 +8,7 @@ class Solution:
             '+': add,
             '-': sub,
             '*': mul,
-            '/': lambda x,y: int( x/y )
+            '/': lambda x, y: int(x/y)
         }
         stack = []
         for ch in tokens:
