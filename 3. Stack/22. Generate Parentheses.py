@@ -26,7 +26,7 @@ class Solution:
 
 class Solution:
     """
-    Approach 1: Recursion
+    Approach 2: Recursion
     time: O(4^2/sqrt(n)), more details in wiki Catalan number.
     space: O(4^2/sqrt(n))
     details: 1. every legal string could be writen as "(a)b",
