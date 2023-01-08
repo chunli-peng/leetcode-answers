@@ -20,7 +20,7 @@ class Solution:
     """
     Approach 2: Prefix Sum + Binary Search
     time: O(nlogn), space: O(n)
-    Follow-up requirement: O(nlogn)
+    Follow-up requirement: time: O(nlogn)
     """
     def minSubArrayLen(self, target: int, nums: List[int]) -> int:
         n = len(nums)
