@@ -16,7 +16,7 @@ class Solution:
 
 class Solution:
     """
-    Approach 2: Fast-slow pointers
+    Approach 2: Fast-slow Pointers
     time: O(n), space: O(1)
     """
     def removeDuplicates(self, nums: List[int]) -> int:

@@ -10,7 +10,7 @@ class Solution:
     """
     def reverseList(self, head: ListNode) -> ListNode:
         prev, curr = None, head
-        while curr is not None:
+        while curr:
             next = curr.next
             curr.next = prev
             prev = curr
@@ -24,11 +24,10 @@ class Solution:
     time: O(n), space: O(n)
     """
     def reverseList(self, head: ListNode) -> ListNode:
-        if head is None or head.next is None:
+        if not head or not head.next:
             return head
 
-        p = self.reverseList(head.next)
+        prev = self.reverseList(head.next)
         head.next.next = head
         head.next = None
-
-        return p
+        return prev
