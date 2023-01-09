@@ -42,20 +42,20 @@ class Solution:
     Follow-up requirements: time: O(n), space: O(1)
     """
     def isPalindrome(self, head: ListNode) -> bool:
-        cur = None
+        curr = None
         slow = head
         fast = head
 
         # reverse the front half linked list
         while fast and fast.next:
             fast = fast.next.next
-            cur, slow.next, slow = slow, cur, slow.next
+            curr, slow.next, slow = slow, curr, slow.next
 
         if fast:  # even
             slow = slow.next  # move back since reversion
         while slow:  # check palindrome
-            if slow.val != cur.val:
+            if slow.val != curr.val:
                 return False
             slow = slow.next
-            cur = cur.next
+            curr = curr.next
         return True
