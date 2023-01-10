@@ -41,29 +41,26 @@ class Solution:
         if not head:
             return
 
-        mid = self.middleNode(head)
+        mid = self.middle_node(head)
         p1, p2 = head, mid.next
         mid.next = None
-        p2 = self.reverseList(p2)
-        self.mergeLists(p1, p2)
+        p2 = self.reverse_list(p2)
+        self.merge_lists(p1, p2)
 
-    def middleNode(self, head: ListNode) -> ListNode:
+    def middle_node(self, head: ListNode) -> ListNode:
         slow, fast = head, head
         while fast.next and fast.next.next:
             slow = slow.next
             fast = fast.next.next
         return slow
 
-    def reverseList(self, head: ListNode) -> ListNode:
+    def reverse_list(self, head: ListNode) -> ListNode:
         prev, curr = None, head
         while curr:
-            next = curr.next
-            curr.next = prev
-            prev = curr
-            curr = next
+            curr.next, prev, curr = prev, curr, curr.next
         return prev
 
-    def mergeLists(self, p1: ListNode, p2: ListNode) -> None:
+    def merge_lists(self, p1: ListNode, p2: ListNode) -> None:
         while p2:
             tmp1, tmp2 = p1.next, p2.next
             p1.next, p2.next = p2, tmp1

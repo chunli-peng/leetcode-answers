@@ -24,15 +24,15 @@ class Solution:
     def isPalindrome(self, head: ListNode) -> bool:
         self.left = head
 
-        def check(right=head):
+        def recursively_check(right=head):
             if right:
-                if not check(right.next):
+                if not recursively_check(right.next):
                     return False
                 if self.left.val != right.val:
                     return False
                 self.left = self.left.next
             return True
-        return check()
+        return recursively_check()
 
 
 class Solution:
@@ -42,9 +42,7 @@ class Solution:
     Follow-up requirements: time: O(n), space: O(1)
     """
     def isPalindrome(self, head: ListNode) -> bool:
-        curr = None
-        slow = head
-        fast = head
+        curr, slow, fast = None, head, head
 
         # reverse the front half linked list
         while fast and fast.next:

@@ -16,7 +16,7 @@ class Solution:
     """
     def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
         if not root:
-            return None
+            return
         queue = [root]
         while queue:
             n = len(queue)
@@ -39,7 +39,7 @@ class Solution:
     """
     def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
         if not root:
-            return None
+            return
         left_most = root
         while left_most.left:
             head = left_most
@@ -59,18 +59,16 @@ class Solution:
     Follow-up requirement: space: O(1), The recursive approach is fine.
     """
     def connect(self, root):
-        def dfs(root=root):
-            if not root:
-                return
-            left = root.left
-            right = root.right
-            while left:
-                left.next = right
-                left = left.right
-                right = right.left
-            dfs(root.left)
-            dfs(root.right)
-        dfs()
+        if not root:
+            return
+        left = root.left
+        right = root.right
+        while left:
+            left.next = right
+            left = left.right
+            right = right.left
+        self.connect(root.left)
+        self.connect(root.right)
         return root
 
 
@@ -82,7 +80,7 @@ class Solution:
     """
     def connect(self, root: 'Node') -> 'Node':
         if not root:
-            return root
+            return
 
         def dfs(node_1=root.left, node_2=root.right):
             if not node_1:

@@ -3,6 +3,7 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
 class Solution:
     """
     Approach 1: Iteration
@@ -15,6 +16,18 @@ class Solution:
             curr.next = prev
             prev = curr
             curr = next
+        return prev
+
+
+class Solution:
+    """
+    Approach 1.2: Iteration (alternative code)
+    time: O(n), space: O(1)
+    """
+    def reverseList(self, head: ListNode) -> ListNode:
+        prev, curr = None, head
+        while curr:
+            curr.next, prev, curr = prev, curr, curr.next
         return prev
 
 

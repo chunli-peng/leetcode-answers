@@ -9,14 +9,14 @@ class Solution:
         while left <= right:
             mid = (left + right)//2
             removed = set(removable[:mid+1])
-            if self.check(s, p, removed):
+            if self.check_subseq(s, p, removed):
                 left = mid + 1
                 res = max(res, left)
             else:
                 right = mid - 1
         return res
 
-    def check(self, s: str, p: str, removed: set) -> bool:
+    def check_subseq(self, s: str, p: str, removed: set) -> bool:
         i, j = 0, 0
         while i < len(s) and j < len(p):
             if i in removed or s[i] != p[j]:

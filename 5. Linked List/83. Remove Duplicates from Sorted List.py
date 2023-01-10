@@ -24,7 +24,7 @@ class Solution:
     """
     def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
         if not head:
-            return head
+            return
 
         cur = head
         while cur.next:

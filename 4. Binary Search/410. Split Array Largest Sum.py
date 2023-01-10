@@ -33,14 +33,14 @@ class Solution:
         res = right
         while left <= right:
             mid = (left+right)//2
-            if self.check(nums, k, mid):
+            if self.check_split(nums, k, mid):
                 res = mid
                 right = mid-1
             else:
                 left = mid+1
         return res
 
-    def check(self, nums, k, largest) -> bool:
+    def check_split(self, nums, k, largest) -> bool:
         cur_sum, num_subarray = 0, 1
         for num in nums:
             cur_sum += num

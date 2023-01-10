@@ -1,6 +1,6 @@
 class FreqStack:
     """
-    Approach 1: Hashtable + Stack
+    Approach 1: Hash Table + Stack
     time: O(1), space: O(n)
     """
     def __init__(self):

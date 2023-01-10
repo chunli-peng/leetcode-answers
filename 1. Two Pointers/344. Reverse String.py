@@ -15,4 +15,4 @@ class Solution:
             p1 += 1
             p2 -= 1
 
-        # alternative Approach: Slicing  s[:] = s[::-1]
+        # alternative code: Slicing  s[:] = s[::-1]

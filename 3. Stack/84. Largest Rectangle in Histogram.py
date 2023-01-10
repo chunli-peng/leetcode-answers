@@ -21,7 +21,7 @@ class Solution:
 
 class Solution:
     """
-    Approach 1.2: Monotonic Stack (Alternative Code)
+    Approach 1.2: Monotonic Stack (alternative code)
     time: O(n), space: O(n)
     """
     def largestRectangleArea(self, heights: List[int]) -> int:
