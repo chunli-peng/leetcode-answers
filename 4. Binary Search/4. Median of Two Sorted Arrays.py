@@ -2,7 +2,7 @@ class Solution:
     """
     Approach 1: Binary Search
     time: O(log(m+n)), space: O(1)
-    requirement: time: O(log(m+n)).
+    Requirement: time: O(log(m+n)).
     """
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
         def getKthElement(k):
@@ -39,7 +39,7 @@ class Solution:
     """
     Approach 2: Binary Search + Partition
     time: O(log(min(m, n))), space: O(1)
-    requirement: time: O(log(m+n)).
+    Requirement: time: O(log(m+n)).
     """
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
         m, n = len(nums1), len(nums2)

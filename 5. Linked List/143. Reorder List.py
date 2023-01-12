@@ -41,17 +41,16 @@ class Solution:
         if not head:
             return
 
-        mid = self.middle_node(head)
+        mid = self.get_mid(head)
         p1, p2 = head, mid.next
         mid.next = None
         p2 = self.reverse_list(p2)
         self.merge_lists(p1, p2)
 
-    def middle_node(self, head: ListNode) -> ListNode:
+    def get_mid(self, head: ListNode) -> ListNode:
         slow, fast = head, head
         while fast.next and fast.next.next:
-            slow = slow.next
-            fast = fast.next.next
+            slow, fast = slow.next, fast.next.next
         return slow
 
     def reverse_list(self, head: ListNode) -> ListNode:
