@@ -8,7 +8,6 @@ class Node:
         self.next = next
 """
 
-
 class Solution:
     """
     Approach 1: BFS
