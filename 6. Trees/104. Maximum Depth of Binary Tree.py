@@ -7,7 +7,7 @@
 
 class Solution:
     """
-    Approach 1: Recursion (DFS)
+    Approach 1: Recursive DFS
     time: O(n), space: O(n)
     """
     def maxDepth(self, root: Optional[TreeNode]) -> int:
@@ -20,19 +20,38 @@ class Solution:
 
 class Solution:
     """
-    Approach 2: Iteration (DFS)
+    Approach 2: Iterative DFS
     time: O(n), space: O(n)
     """
     def maxDepth(self, root: Optional[TreeNode]) -> int:
-        stack = [[root, 1]]
         res = 0
-
+        stack = [[root, 1]]  # pair: [node, depth]
         while stack:
             node, depth = stack.pop()
             if node:
                 res = max(res, depth)
-                stack.append([node.left, depth+1])
                 stack.append([node.right, depth+1])
+                stack.append([node.left, depth+1])
+        return res
+
+
+class Solution:
+    """
+    Approach 2.2: Iterative DFS (alternative code)
+    time: O(n), space: O(n)
+    """
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        res = 0
+        if not root:
+            return res
+        stack = [[root, 1]]  # pair: [node, depth]
+        while stack:
+            node, depth = stack.pop()
+            res = max(res, depth)
+            if node.right:
+                stack.append([node.right, depth+1])
+            if node.left:
+                stack.append([node.left, depth+1])
         return res
 
 
@@ -42,11 +61,10 @@ class Solution:
     time: O(n), space: O(n)
     """
     def maxDepth(self, root: Optional[TreeNode]) -> int:
-        queue = []
-        if root:
-            queue.append(root)
         res = 0
-
+        if not root:
+            return res
+        queue = [root]
         while queue:
             n = len(queue)
             for i in range(n):
@@ -56,4 +74,24 @@ class Solution:
                 if node.right:
                     queue.append(node.right)
             res += 1
+        return res
+
+
+class Solution:
+    """
+    Approach 3.2: BFS (alternative code)
+    time: O(n), space: O(n)
+    """
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        res = 0
+        if not root:
+            return res
+        queue = [[root, 1]]  # pair: [node, depth]
+        while queue:
+            node, depth = queue.pop()
+            res = max(res, depth)
+            if node.left:
+                queue.append([node.left, depth+1])
+            if node.right:
+                queue.append([node.right, depth+1])
         return res

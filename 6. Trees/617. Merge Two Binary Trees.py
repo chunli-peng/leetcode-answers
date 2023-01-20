@@ -7,7 +7,7 @@
 
 class Solution:
     """
-    Approach 1: Recursion (DFS)
+    Approach 1: Recursive DFS
     time: O(min(m,n)), space: O(min(m,n))
     """
     def mergeTrees(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
@@ -23,7 +23,44 @@ class Solution:
 
 class Solution:
     """
-    Approach 2: BFS
+    Approach 2: Iterative DFS
+    time: O(min(m,n)), space: O(min(m,n))
+    """
+    def mergeTrees(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root1:
+            return root2
+        if not root2:
+            return root1
+
+        merged = TreeNode(root1.val+root2.val)
+        stack = [[merged, root1, root2]]
+        while stack:
+            node, node_1, node_2 = stack.pop()
+            left_1, right_1 = node_1.left, node_1.right
+            left_2, right_2 = node_2.left, node_2.right
+
+            if right_1 and right_2:
+                node.right = TreeNode(right_1.val+right_2.val)
+                stack.append([node.right, right_1, right_2])
+            elif right_1:
+                node.right = right_1
+            elif right_2:
+                node.right = right_2
+
+            if left_1 and left_2:
+                node.left = TreeNode(left_1.val+left_2.val)
+                stack.append([node.left, left_1, left_2])
+            elif left_1:
+                node.left = left_1
+            elif left_2:
+                node.left = left_2
+
+        return merged
+
+
+class Solution:
+    """
+    Approach 3: BFS
     time: O(min(m,n)), space: O(min(m,n))
     """
     def mergeTrees(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
@@ -35,8 +72,7 @@ class Solution:
         merged = TreeNode(root1.val+root2.val)
         queue = [[merged, root1, root2]]
         while queue:
-            temp = queue.pop(0)
-            node, node_1, node_2 = temp[0], temp[1], temp[2]
+            node, node_1, node_2 = queue.pop(0)
             left_1, right_1 = node_1.left, node_1.right
             left_2, right_2 = node_2.left, node_2.right
 

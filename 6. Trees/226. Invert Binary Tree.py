@@ -7,7 +7,7 @@
 
 class Solution:
     """
-    Approach 1: Bottom Up DFS
+    Approach 1: Recursive DFS (Bottom Up)
     time: O(n), space: O(n)
     """
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
@@ -21,7 +21,7 @@ class Solution:
 
 class Solution:
     """
-    Approach 1.2: Top Down DFS
+    Approach 1.2: Recursive DFS (Top Down)
     time: O(n), space: O(n)
     """
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
@@ -40,13 +40,13 @@ class Solution:
     """
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         if not root:
-            return None
+            return
         queue = [root]
         while queue:
-            tmp = queue.pop(0)
-            tmp.left, tmp.right = tmp.right, tmp.left
-            if tmp.left:
-                queue.append(tmp.left)
-            if tmp.right:
-                queue.append(tmp.right)
+            cur = queue.pop(0)
+            cur.left, cur.right = cur.right, cur.left
+            if cur.left:
+                queue.append(cur.left)
+            if cur.right:
+                queue.append(cur.right)
         return root

@@ -7,29 +7,15 @@
 
 class Solution:
     """
-    Approach 1: Inorder Traversal (right point of mid)
+    Approach 1: Recursive DFS (Inorder Traversal)
     time:  O(n), space: O(logn)
     """
     def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
         n = len(nums)
         if not n:
             return
-        left = self.sortedArrayToBST(nums[:n//2])
-        mid = nums[n//2]
-        right = self.sortedArrayToBST(nums[n//2+1:])
-        return TreeNode(mid, left, right)
-
-
-class Solution:
-    """
-    Approach 1.2: Inorder Traversal (left point of mid)
-    time:  O(n), space: O(logn)
-    """
-    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
-        n = len(nums)
-        if not n:
-            return
-        n -= 1
+        # default: root at right point of mid
+        # n -= 1  # root at left point of mid
         left = self.sortedArrayToBST(nums[:n//2])
         mid = nums[n//2]
         right = self.sortedArrayToBST(nums[n//2+1:])

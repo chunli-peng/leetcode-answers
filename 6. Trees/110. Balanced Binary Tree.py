@@ -7,7 +7,7 @@
 
 class Solution:
     """
-    Approach 1: Recursion (DFS)
+    Approach 1: Recursive DFS
     time: O(n), space: O(n)
     """
     def isBalanced(self, root: Optional[TreeNode]) -> bool:

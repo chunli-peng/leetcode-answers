@@ -32,6 +32,26 @@ class Solution:
 
 class Solution:
     """
+    Approach 1.2: BFS (alternative code)
+    time: O(n), space: O(n)
+    """
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if not root:
+            return
+        queue = [[root, 1]]  # pair: [node, depth]
+        while queue:
+            node, depth = queue.pop(0)
+            if queue and depth == queue[0][1]:
+                node.next = queue[0][0]
+            if node.left:
+                queue.append([node.left, depth+1])
+            if node.right:
+                queue.append([node.right, depth+1])
+        return root
+
+
+class Solution:
+    """
     Approach 2: Using Next Pointers
     time: O(n), space: O(1)
     Follow-up requirement: space: O(1)
@@ -53,7 +73,7 @@ class Solution:
 
 class Solution:
     """
-    Approach 3: Recursion (DFS)
+    Approach 3: Recursive DFS
     time: O(n), space: O(1), You may assume implicit stack space does not count as extra space for this problem.
     Follow-up requirement: space: O(1), The recursive approach is fine.
     """
@@ -73,7 +93,7 @@ class Solution:
 
 class Solution:
     """
-    Approach 3.2: Recursion (DFS)
+    Approach 3.2: Recursive DFS (alternative code)
     time: O(n), space: O(1), You may assume implicit stack space does not count as extra space for this problem.
     Follow-up requirement: space: O(1), The recursive approach is fine.
     """

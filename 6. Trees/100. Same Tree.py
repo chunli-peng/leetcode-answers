@@ -7,7 +7,7 @@
 
 class Solution:
     """
-    Approach 1: Recursion (DFS)
+    Approach 1: Recursive DFS
     time: O(min(m,n)), space: O(min(m,n))
     """
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:

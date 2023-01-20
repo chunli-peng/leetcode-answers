@@ -7,7 +7,7 @@
 
 class Solution:
     """
-    Approach 1: Recursion (DFS)
+    Approach 1: Recursive DFS
     time:  O(m*n), space: O(m+n)
     """
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
@@ -35,7 +35,6 @@ class Solution:
     time:  O(m+n), space: O(m+n)
     """
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
-
         # Function to serialize Tree
         def serialize(node, tree_str):
             if node is None:

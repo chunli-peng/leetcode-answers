@@ -7,7 +7,7 @@
 
 class Solution:
     """
-    Approach 1: Recursion (DFS)
+    Approach 1: Recursive DFS
     time: O(n), space: O(n)
     """
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
@@ -22,7 +22,7 @@ class Solution:
 
 class Solution:
     """
-    Approach 2: Iteration (DFS)
+    Approach 2: Iterative DFS
     time: O(n), space: O(n)
     Follow-up requirement: Iteration
     """
