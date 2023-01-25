@@ -53,11 +53,11 @@ class Solution:
             j = total_len//2-i-2
 
             # the maximums of the left set
-            nums1_left = nums1[i] if i >= 0 else float('-infinity')
-            nums2_left = nums2[j] if j >= 0 else float('-infinity')
+            nums1_left = nums1[i] if i >= 0 else float('-inf')
+            nums2_left = nums2[j] if j >= 0 else float('-inf')
             # the minimums of the right set
-            nums1_right = nums1[i+1] if (i+1) < m else float('infinity')
-            nums2_right = nums2[j+1] if (j+1) < n else float('infinity')
+            nums1_right = nums1[i+1] if (i+1) < m else float('inf')
+            nums2_right = nums2[j+1] if (j+1) < n else float('inf')
 
             if nums1_left <= nums2_right and nums2_left <= nums1_right:
                 # partition is correct
