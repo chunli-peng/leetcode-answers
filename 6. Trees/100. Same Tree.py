@@ -22,7 +22,7 @@ class Solution:
 
 class Solution:
     """
-    Approach 2: BFS
+    Approach 2: Iterative DFS
     time: O(min(m,n)), space: O(min(m,n))
     """
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
@@ -30,21 +30,43 @@ class Solution:
             return True
         if not p or not q:
             return False
-        queue_1, queue_2 = [p], [q]
-        while queue_1 and queue_2:
-            node_1, node_2 = queue_1.pop(0), queue_2.pop(0)
+        stack = [[p, q]]
+        while stack:
+            node_1, node_2 = stack.pop()
             if node_1.val != node_2.val:
                 return False
-            left_1, right_1 = node_1.left, node_1.right
-            left_2, right_2 = node_2.left, node_2.right
-            if (not left_1) ^ (not left_2):
+            if (not node_1.left) ^ (not node_2.left):
                 return False
-            if (not right_1) ^ (not right_2):
+            if (not node_1.right) ^ (not node_2.right):
                 return False
-            if left_1:
-                queue_1.append(left_1)
-                queue_2.append(left_2)
-            if right_1:
-                queue_1.append(right_1)
-                queue_2.append(right_2)
+            if node_1.right:
+                stack.append([node_1.right, node_2.right])
+            if node_1.left:
+                stack.append([node_1.left, node_2.left])
+        return True
+
+
+class Solution:
+    """
+    Approach 3: BFS
+    time: O(min(m,n)), space: O(min(m,n))
+    """
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if not p and not q:
+            return True
+        if not p or not q:
+            return False
+        queue = [[p, q]]
+        while queue:
+            node_1, node_2 = queue.pop(0)
+            if node_1.val != node_2.val:
+                return False
+            if (not node_1.left) ^ (not node_2.left):
+                return False
+            if (not node_1.right) ^ (not node_2.right):
+                return False
+            if node_1.left:
+                queue.append([node_1.left, node_2.left])
+            if node_1.right:
+                queue.append([node_1.right, node_2.right])
         return True

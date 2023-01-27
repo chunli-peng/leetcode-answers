@@ -91,5 +91,4 @@ class Solution:
                 node.right = right_1
             elif right_2:
                 node.right = right_2
-
         return merged

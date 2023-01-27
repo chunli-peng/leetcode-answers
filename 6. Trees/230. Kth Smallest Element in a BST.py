@@ -39,27 +39,19 @@ class Solution:
 class Solution:
     """
     Approach 3: DFS + Dictionary
-    time: O(n) for pretreatment, O(H) for searching, where H is the height of the tree, \
-        best: O(logn), worst: O(n)
-    space: O(n) for storing the tree
+    time: O(h+k), where h is the height of the tree, best: O(logn), worst: O(n)
+    space: O(h), best: O(logn), worst: O(n)
     Follow-up requirement: If you need to find the kth smallest frequently, how would you optimize?
     """
+    def __init__(self) -> None:
+        self.cache = {}
+
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        bst = MyBst(root)
-        return bst.kth_smallest(k)
-
-
-class MyBst:
-    def __init__(self, root: Optional[TreeNode]):
-        self.root = root
-        self._node_num = {}
-        self._count_node_num(root)
-
-    def kth_smallest(self, k: int):
         """Return the k-th smallest value"""
-        node = self.root
+        self._count_node_num(root)
+        node = root
         while node:
-            left = self._node_num[node.left] if node.left else 0
+            left = self.cache[node.left] if node.left else 0
             if left < k - 1:
                 node = node.right
                 k -= left + 1
@@ -72,8 +64,9 @@ class MyBst:
         """Count the numbers of children according to root"""
         if not node:
             return 0
-        self._node_num[node] = 1 + self._count_node_num(node.left) + self._count_node_num(node.right)
-        return self._node_num[node]
+        self.cache[node] = 1 + self._count_node_num(node.left) \
+            + self._count_node_num(node.right)
+        return self.cache[node]
 
 
 class Solution:
