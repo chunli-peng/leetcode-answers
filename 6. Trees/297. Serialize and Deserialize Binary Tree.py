@@ -63,6 +63,47 @@ class Codec:
         return dfs(data.split(","))
 
 
+class Codec:
+    """
+    Approach 2: BFS
+    time: O(n), space: O(n)
+    """
+    def serialize(self, root: TreeNode) -> str:
+        """Encodes a tree to a single string."""
+        if not root:
+            return ""
+        queue = collections.deque([root])
+        res = []
+        while queue:
+            node = queue.popleft()
+            if node:
+                res.append(str(node.val))
+                queue.append(node.left)
+                queue.append(node.right)
+            else:
+                res.append('#')
+        return '[' + ','.join(res) + ']'
+
+    def deserialize(self, data: str) -> TreeNode:
+        """Decodes your encoded data to tree."""
+        if not data:
+            return []
+        vals = data[1:-1].split(',')
+        root = TreeNode(int(vals[0]))
+        queue = collections.deque([root])
+        i = 1
+        while queue:
+            node = queue.popleft()
+            if vals[i] != '#':
+                node.left = TreeNode(int(vals[i]))
+                queue.append(node.left)
+            i += 1
+            if vals[i] != '#':
+                node.right = TreeNode(int(vals[i]))
+                queue.append(node.right)
+            i += 1
+        return root
+
 # Your Codec object will be instantiated and called as such:
 # ser = Codec()
 # deser = Codec()

@@ -5,6 +5,10 @@
 #         self.left = left
 #         self.right = right
 
+"""
+Same to 1038. Binary Search Tree to Greater Sum Tree
+"""
+
 class Solution:
     """
     Approach 1: Recursive DFS

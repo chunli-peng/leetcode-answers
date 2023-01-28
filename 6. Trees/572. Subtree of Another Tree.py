@@ -15,18 +15,18 @@ class Solution:
             return True
         elif not root:
             return False
-        return self.is_same_tree(root, subRoot) or \
+        return self._is_same_tree(root, subRoot) or \
             self.isSubtree(root.left, subRoot) or \
             self.isSubtree(root.right, subRoot)
 
-    def is_same_tree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+    def _is_same_tree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         if not p and not q:
             return True
         elif not p or not q or p.val != q.val:
             return False
         else:
-            return self.is_same_tree(p.left, q.left) and \
-                self.is_same_tree(p.right, q.right)
+            return self._is_same_tree(p.left, q.left) and \
+                self._is_same_tree(p.right, q.right)
 
 
 class Solution:
@@ -35,122 +35,89 @@ class Solution:
     time:  O(m+n), space: O(m+n)
     """
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
-        # Function to serialize Tree
-        def serialize(node, tree_str):
-            if node is None:
-                tree_str.append('#')
-                return
+        root_str, subroot_str = self._serialize(root), self._serialize(subRoot)
+        return self._kmp(subroot_str.split(","), root_str.split(","))
 
-            tree_str.append("^")
-            tree_str.append(str(node.val))
-            serialize(node.left, tree_str)
-            serialize(node.right, tree_str)
+    def _serialize(self, root) -> str:
+        """Serialize Tree by Preorder"""
+        if not root:
+            return '#'
+        return str(root.val) + ',' + str(self._serialize(root.left)) + ',' \
+            + str(self._serialize(root.right))
 
-        # Knuth-Morris-Pratt algorithm to check if `needle` is in `haystack`
-        def kmp(needle, haystack):
-            m = len(needle)
-            n = len(haystack)
+    def _get_lps_array(self, needle: List) -> List:
+        """Get Longest Proper Prefix which is also Suffix (LPS) array.
+        Example  : ACABACACD
+        LPS Array: 001012320
+        """
+        m = len(needle)
+        lps = [0] * m  # lps[0] will always be 0
+        prev, curr = 0, 1
+        while curr < m:
+            if needle[curr] == needle[prev]:
+                prev += 1  # Length of Longest Border Increased
+                lps[curr] = prev
+                curr += 1
+            else:
+                if prev == 0:  # Only empty border exist
+                    lps[curr] = 0
+                    curr += 1
+                else:  # Try finding longest border for this curr with reduced prev
+                    prev = lps[prev-1]
+        return lps
 
-            if n < m:
-                return False
-
-            # longest proper prefix which is also suffix
-            lps = [0]*m
-            # Length of Longest Border for prefix before it.
-            prev = 0
-            # Iterating from index-1. lps[0] will always be 0
-            i = 1
-
-            while i < m:
-                if needle[i] == needle[prev]:
-                    # Length of Longest Border Increased
-                    prev += 1
-                    lps[i] = prev
-                    i += 1
-                else:
-                    # Only empty border exist
-                    if prev == 0:
-                        lps[i] = 0
-                        i += 1
-                    # Try finding longest border for this i with reduced prev
-                    else:
-                        prev = lps[prev-1]
-
-            # Pointer for haystack
-            haystack_pointer = 0
-            # Pointer for needle.
-            # Also indicates number of characters matched in current window.
-            needle_pointer = 0
-
-            while haystack_pointer < n:
-                if haystack[haystack_pointer] == needle[needle_pointer]:
-                    # Matched Increment Both
-                    needle_pointer += 1
-                    haystack_pointer += 1
-                    # All characters matched
-                    if needle_pointer == m:
-                        return True
-                else:
-                    if needle_pointer == 0:
-                        # Zero Matched
-                        haystack_pointer += 1
-                    else:
-                        # Optimally shift left needle_pointer.
-                        # Don't change haystack_pointer
-                        needle_pointer = lps[needle_pointer-1]
-
+    def _kmp(self, needle: List, haystack: List) -> bool:
+        """Knuth-Morris-Pratt algorithm to check if 'needle' is in 'haystack'."""
+        m, n = len(needle), len(haystack)
+        if m > n:
             return False
 
-        # Serialize given Nodes
-        root_list = []
-        serialize(root, root_list)
-        r = "".join(root_list)
-
-        subroot_list = []
-        serialize(subRoot, subroot_list)
-        s = "".join(subroot_list)
-
-        # Check if s is in r
-        return kmp(s, r)
+        haystack_i, needle_i = 0, 0
+        lps = self._get_lps_array(needle)
+        while haystack_i < n:
+            if needle[needle_i] == haystack[haystack_i]:  # Matched increment both
+                needle_i += 1
+                haystack_i += 1
+                if needle_i == m:  # All characters matched
+                    return True
+            else:
+                if needle_i == 0:  # Zero matched
+                    haystack_i += 1
+                else:
+                    needle_i = lps[needle_i-1]  # Shift left
+        return False
 
 
 class Solution:
     """
-    Approach 3: Tree Hash
+    Approach 3: Tree Hash + Recursive DFS
     time:  O(m+n), space: O(m+n)
     """
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
-        MOD_1 = 1_000_000_007
-        MOD_2 = 2_147_483_647
+        self.cache = set()  # Set to store hashed value of each node.
+        self._tree_hash(root, True)  # Calling and adding hash to List
+        return self._tree_hash(subRoot, False) in self.cache
 
-        def hash_subtree_at_node(node, need_to_add):
-            if node is None:
-                return (3, 7)
+    def _tree_hash(self, root, need_each_node):
+        """Double Hash Function, return Hash pair in the root or each node."""
+        MOD_1 = 1_000_000_007  # large prime number
+        MOD_2 = 2_147_483_647  # large prime number
 
-            left = hash_subtree_at_node(node.left, need_to_add)
-            right = hash_subtree_at_node(node.right, need_to_add)
+        if not root:
+            return (3, 7)
 
-            left_1 = (left[0] << 5) % MOD_1
-            right_1 = (right[0] << 1) % MOD_1
-            left_2 = (left[1] << 7) % MOD_2
-            right_2 = (right[1] << 1) % MOD_2
+        left_pair = self._tree_hash(root.left, need_each_node)
+        right_pair = self._tree_hash(root.right, need_each_node)
 
-            hashpair = ((left_1 + right_1 + node.val) % MOD_1,
-                        (left_2 + right_2 + node.val) % MOD_2)
+        left_1 = (left_pair[0] << 5) % MOD_1
+        right_1 = (right_pair[0] << 1) % MOD_1
+        left_2 = (left_pair[1] << 7) % MOD_2
+        right_2 = (right_pair[1] << 1) % MOD_2
 
-            if need_to_add:
-                memo.add(hashpair)
+        root_hash_pair = ((left_1 + right_1 + root.val) % MOD_1,
+                          (left_2 + right_2 + root.val) % MOD_2)
 
-            return hashpair
+        if need_each_node:
+            self.cache.add(root_hash_pair)
 
-        # List to store hashed value of each node.
-        memo = set()
-
-        # Calling and adding hash to List
-        hash_subtree_at_node(root, True)
-
-        # Storing hashed value of subRoot for comparison
-        s = hash_subtree_at_node(subRoot, False)
-
-        # Check if hash of subRoot is present in memo
-        return s in memo
+        return root_hash_pair
