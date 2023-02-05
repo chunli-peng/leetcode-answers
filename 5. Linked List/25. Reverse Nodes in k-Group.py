@@ -6,7 +6,7 @@
 
 class Solution:
     """
-    Approach 1: Imitation
+    Approach 1: Simulation
     time: O(n), space: O(1)
     Follow-up requirement: space: O(1)
     """
