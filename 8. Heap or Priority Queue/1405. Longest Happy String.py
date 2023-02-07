@@ -32,7 +32,7 @@ class Solution:
 
 class Solution:
     """
-    Approach 2: Greedy + Sort
+    Approach 2: Greedy + Sorting
     time: O((a+b+c)*ClogC), space: O(C), where C=3
     """
     def longestDiverseString(self, a: int, b: int, c: int) -> str:

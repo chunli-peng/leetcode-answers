@@ -1,6 +1,6 @@
 class Solution:
     """
-    Approach 1: Min Heap + Sort
+    Approach 1: Min Heap + Sorting
     time: O(nlogn) for sort(), n times heappop() and heappush() with O(logn)
         totally, O(nlogn)
     space: O(n)

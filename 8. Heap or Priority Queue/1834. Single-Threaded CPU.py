@@ -1,6 +1,6 @@
 class Solution:
     """
-    Approach 1: Sort + Min Heap
+    Approach 1: Sorting + Min Heap
     time: O(nlogn) for sorted, n times O(logn) for heappop and heappush
         totally, O(nlogn)
     space: O(n)

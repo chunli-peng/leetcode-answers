@@ -1,6 +1,6 @@
 class Solution:
     """
-    Approach 1: Min Heap
+    Approach 1: Two Heaps
     time: O((m+n)logm), O(m+nlogm) in Python since heapify() is O(m)
         where m=len(servers), n=len(tasks)
     space: O(m)
