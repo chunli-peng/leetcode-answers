@@ -1,4 +1,10 @@
 class Solution:
+    """
+    Approach 1: Recursive DFS in Multiway Tree
+    time: O(N!), where n is the numbers of Queens
+    space: O(N) for function stack, O(n) for hash table <col>, <pos_diag>, <neg_diag>,
+        totally, O(n)
+    """
     def solveNQueens(self, n: int) -> List[List[str]]:
         col = set()
         pos_diag = set()  # (r + c)
@@ -25,3 +31,18 @@ class Solution:
                 board[r][c] = "."
         dfs()
         return res
+
+
+class Solution:
+    """
+    unfinished
+    Approach 2: Bitwise DFS
+    time: O(N!), where n is the numbers of Queens
+    space: O(N) for function stack, O(n) for hash table <col>, <pos_diag>, <neg_diag>,
+        totally, O(n)
+        https://leetcode.cn/problems/n-queens/solutions/398929/nhuang-hou-by-leetcode-solution/
+    """
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        col = set()
+        pos_diag = set()  # (r + c)
+        neg_diag = set()  # (r - c)
