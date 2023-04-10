@@ -1,19 +1,21 @@
 class Solution:
     """
-    Approach 1: BFS
-    time: O(),
-    space: O()
+    Approach 1: BFS + Hash Table
+    time: O(m*n) for create <graph>, O(m*n) for bfs(), O(n) for each string,
+        totally, O(m*n^2), m=len(wordList), n=len(beginWord)
+    space: O(m*n^2) for <graph>, where O(mn) for all nodes with O(n) length,
+        O(mn) for <visited> and <queue>, totally, O(m*n^2)
     """
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         if endWord not in wordList:
             return 0
 
         n = len(beginWord)
-        neighbor = collections.defaultdict(list)
+        graph = collections.defaultdict(list)
         for word in wordList:
             for i in range(n):
                 pattern = word[:i] + '.' + word[i+1:]
-                neighbor[pattern].append(word)
+                graph[pattern].append(word)
 
         queue = [(beginWord, 1)]
         visited = set([beginWord])
@@ -23,7 +25,7 @@ class Solution:
                 return res
             for i in range(n):
                 pattern = word[:i] + '.' + word[i+1:]
-                for child in neighbor[pattern]:
+                for child in graph[pattern]:
                     if child not in visited:
                         queue.append([child, res+1])
                         visited.add(child)
@@ -32,66 +34,52 @@ class Solution:
 
 class Solution:
     """
-    Approach 1: Approach 2: Bidirectional BFS
-    time: O(),
-    space: O()
+    Approach 2: Bidirectional BFS + Hash Table
+    time: O(m*n) for create <graph>, O(m*n) for bfs(), O(n) for each string,
+        totally, O(m*n^2), m=len(wordList), n=len(beginWord)
+    space: O(m*n^2) for <graph>, where O(mn) for all nodes with O(n) length,
+        O(mn) for <visited> and <queue>, totally, O(m*n^2)
     """
     def __init__(self):
-        self.length = 0
-        # Dictionary to hold combination of words that can be formed,
-        # from any given word. By changing one letter at a time.
-        self.all_combo_dict = defaultdict(list)
-
-    def visitWordNode(self, queue, visited, others_visited):
-        queue_size = len(queue)
-        for _ in range(queue_size):
-            current_word = queue.popleft()
-            for i in range(self.length):
-                # Intermediate words for current word
-                intermediate_word = current_word[:i] + "*" + current_word[i+1:]
-                # Next states are all the words which share the same intermediate state.
-                for word in self.all_combo_dict[intermediate_word]:
-                    # If the intermediate state/word has already been visited from the
-                    # other parallel traversal this means we have found the answer.
-                    if word in others_visited:
-                        return visited[current_word] + others_visited[word]
-                    if word not in visited:
-                        # Save the level as the value of the dictionary, to save number of hops.
-                        visited[word] = visited[current_word] + 1
-                        queue.append(word)
-        return None
+        self.n = 0
+        self.graph = collections.defaultdict(list)
 
     def ladderLength(self, beginWord, endWord, wordList):
-        if endWord not in wordList or not endWord or not beginWord or not wordList:
+        if endWord not in wordList:
             return 0
 
-        # Since all words are of same length.
-        self.length = len(beginWord)
-
+        self.n = len(beginWord)
         for word in wordList:
-            for i in range(self.length):
-                # Key is the generic word
-                # Value is a list of words which have the same intermediate generic word.
-                self.all_combo_dict[word[:i] + "*" + word[i+1:]].append(word)
+            for i in range(self.n):
+                pattern = word[:i] + "." + word[i+1:]
+                self.graph[pattern].append(word)
 
-        # Queues for birdirectional BFS
-        queue_begin = collections.deque([beginWord]) # BFS starting from beginWord
-        queue_end = collections.deque([endWord]) # BFS starting from endWord
+        queue_begin = [beginWord]  # BFS starting from beginWord
+        queue_end = [endWord]  # BFS starting from endWord
 
-        # Visited to make sure we don't repeat processing same word
-        visited_begin = {beginWord : 1}
-        visited_end = {endWord : 1}
-        ans = None
+        visited_begin = {beginWord : 1}  # pair: word: level
+        visited_end = {endWord : 1}  # pair: word: level
+        res = 0
 
-        # We do a birdirectional search starting one pointer from begin
-        # word and one pointer from end word. Hopping one by one.
         while queue_begin and queue_end:
             # Progress forward one step from the shorter queue
             if len(queue_begin) <= len(queue_end):
-                ans = self.visitWordNode(queue_begin, visited_begin, visited_end)
+                res = self.bfs(queue_begin, visited_begin, visited_end)
             else:
-                ans = self.visitWordNode(queue_end, visited_end, visited_begin)
-            if ans:
-                return ans
-
+                res = self.bfs(queue_end, visited_end, visited_begin)
+            if res:
+                return res
         return 0
+
+    def bfs(self, queue, visited, others_visited):
+        queue_len = len(queue)
+        for _ in range(queue_len):
+            word = queue.pop(0)
+            for i in range(self.n):
+                pattern = word[:i] + "." + word[i+1:]
+                for child in self.graph[pattern]:
+                    if child in others_visited:
+                        return visited[word] + others_visited[child]
+                    if child not in visited:
+                        visited[child] = visited[word] + 1
+                        queue.append(child)

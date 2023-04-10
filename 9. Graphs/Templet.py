@@ -1,3 +1,7 @@
+"""
+Code Example from Problem 200:
+"""
+
 class Solution:
     """
     Approach 1: Recursive DFS + Hash Table
@@ -6,7 +10,7 @@ class Solution:
         totally O(mn).
     """
     def numIslands(self, grid: List[List[str]]) -> int:
-        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(grid), len(grid[0])
         res = 0
         visited = set()
@@ -20,12 +24,41 @@ class Solution:
             ):
                 return
             visited.add((i, j))
-            for di, dj in directions:
+            for di, dj in direction:
                 dfs(i+di, j+dj)
 
         for i in range(m):
             for j in range(n):
                 if grid[i][j] == '1' and (i, j) not in visited:
+                    res += 1
+                    dfs(i, j)
+        return res
+
+
+class Solution:
+    """
+    Approach 1.2: Recursive DFS
+    time: O(mn), space: O(mn) for function stack, totally O(mn).
+    """
+    def numIslands(self, grid: List[List[str]]) -> int:
+        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        m, n = len(grid), len(grid[0])
+        res = 0
+
+        def dfs(i, j):
+            if (
+                i < 0 or i >= m or
+                j < 0 or j >= n or
+                grid[i][j] == '0'
+            ):
+                return
+            grid[i][j] = '0'
+            for di, dj in direction:
+                dfs(i+di, j+dj)
+
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1':
                     res += 1
                     dfs(i, j)
         return res
@@ -69,7 +102,7 @@ class Solution:
 
 class Solution:
     """
-    Approach 3: DFS + Hash Table
+    Approach 3: Iterative DFS + Hash Table
     time: O(mn)
     space: O(mn) for hash table <visited>, O(min(m,n)) for <stack>,
         totally, O(mn).
@@ -112,19 +145,19 @@ class Solution:
     """
     def numIslands(self, grid: List[List[str]]) -> int:
         m, n = len(grid), len(grid[0])
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         uf = UnionFind(grid)
 
         for i in range(m):
             for j in range(n):
                 if grid[i][j] == '1':
-                    for di, dj in direction:
+                    for di, dj in directions:
                         if (
                             0 <= i+di < m and
                             0 <= j+dj < n and
                             grid[i+di][j+dj] == '1'
                         ):
-                            uf.unite(i*n+j, (i+di)*n+(j+dj))
+                            uf.union(i*n+j, (i+di)*n+(j+dj))
         return uf.get_counts()
 
 
@@ -146,7 +179,7 @@ class UnionFind:
             self.parent[x] = self._find(self.parent[x])
         return self.parent[x]
 
-    def unite(self, x, y):
+    def union(self, x, y):
         """Unite the point <x> and <y>"""
         root_x = self._find(x)
         root_y = self._find(y)

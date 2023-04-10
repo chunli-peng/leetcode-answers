@@ -9,7 +9,7 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(board), len(board[0])
         visited = set()
 
@@ -23,7 +23,7 @@ class Solution:
                 return
             board[i][j] = '#'
             visited.add((i, j))
-            for di, dj in direction:
+            for di, dj in directions:
                 dfs(i+di, j+dj)
 
         for i in range(m):
@@ -57,7 +57,7 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(board), len(board[0])
         visited = set()
 
@@ -67,7 +67,7 @@ class Solution:
             while queue:
                 x, y = queue.pop(0)
                 board[x][y] = '#'
-                for dx, dy in direction:
+                for dx, dy in directions:
                     if (
                         0 <= x+dx < m and
                         0 <= y+dy < n and
@@ -108,7 +108,7 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(board), len(board[0])
         visited = set()
 
@@ -118,7 +118,7 @@ class Solution:
             while stack:
                 x, y = stack.pop()
                 board[x][y] = '#'
-                for dx, dy in direction:
+                for dx, dy in directions:
                     if (
                         0 <= x+dx < m and
                         0 <= y+dy < n and

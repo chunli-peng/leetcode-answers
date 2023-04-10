@@ -71,10 +71,10 @@ class Solution:
             if node.right:  # If right subtree exists
                 prede = self._get_predecessor(node)
                 if not prede.left:  # 1st visit
-                    prede.left = node  # Connect predecessor and root for backing
+                    prede.left = node  # Connect predecessor and node for backing
                     node = node.right
                 else:  # 2nd visit
-                    prede.left = None  # Disconnect predecessor and root
+                    prede.left = None  # Disconnect predecessor and node
                     node.val += prev_sum
                     prev_sum = node.val
                     node = node.left  # Visit the left subtree
@@ -85,7 +85,7 @@ class Solution:
         return root
 
     def _get_predecessor(self, node):
-        """Get the predecessor of the root, if the right tree exists"""
+        """Get the predecessor of the node, if the right tree exists"""
         prede = node.right
         while prede.left and prede.left != node:
             prede = prede.left

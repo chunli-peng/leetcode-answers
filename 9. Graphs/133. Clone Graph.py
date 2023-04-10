@@ -75,4 +75,3 @@ class Solution:
                     stack.append(neighbor)
                 old_to_new[old].neighbors.append(old_to_new[neighbor])
         return old_to_new[node]
-        

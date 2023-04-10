@@ -10,8 +10,8 @@ class Solution:
         visited = [0] * numCourses  # 0: unvisited, 1: unfinished, 2: finished
         res = []
 
-        for course, req in prerequisites:
-            graph[req].append(course)
+        for crs, req in prerequisites:
+            graph[req].append(crs)
 
         def dfs(i) -> bool:
             if visited[i] > 0:
@@ -33,7 +33,7 @@ class Solution:
 class Solution:
     """
     Approach 1.2: Recursive DFS + Hash Table
-    time: O(m+n), where m is the edge number, m is the vertex number.
+    time: O(m+n), where m is the edge number, n is the vertex number.
     space: O(m+n) for the <graph>, O(n) for hash table <finished>,
         O(n) for function stack, totally, O(m+n).
     """
@@ -42,8 +42,8 @@ class Solution:
         finished = {}  # None: unvisited, True: unfinished, False: finished
         res = []
 
-        for course, req in prerequisites:
-            graph[req].append(course)
+        for crs, req in prerequisites:
+            graph[req].append(crs)
 
         def dfs(i) -> bool:
             if i in finished:
@@ -73,9 +73,9 @@ class Solution:
         graph = [[] for _ in range(numCourses)]
         in_deg = [0 for _ in range(numCourses)]
 
-        for course, req in prerequisites:
-            graph[req].append(course)
-            in_deg[course] += 1
+        for crs, req in prerequisites:
+            graph[req].append(crs)
+            in_deg[crs] += 1
 
         res = []
         queue = [i for i, deg in enumerate(in_deg) if deg == 0]
@@ -101,9 +101,9 @@ class Solution:
         graph = [[] for _ in range(numCourses)]
         in_deg = [0 for _ in range(numCourses)]
 
-        for course, req in prerequisites:
-            graph[req].append(course)
-            in_deg[course] += 1
+        for crs, req in prerequisites:
+            graph[req].append(crs)
+            in_deg[crs] += 1
 
         res = []
         stack = [i for i, deg in enumerate(in_deg) if deg == 0]

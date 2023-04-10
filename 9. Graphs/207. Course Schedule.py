@@ -9,8 +9,8 @@ class Solution:
         graph = [[] for _ in range(numCourses)]
         visited = [0] * numCourses  # 0: unvisited, 1: unfinished, 2: finished
 
-        for course, req in prerequisites:
-            graph[req].append(course)
+        for crs, req in prerequisites:
+            graph[req].append(crs)
 
         def dfs(i) -> bool:
             if visited[i] > 0:
@@ -31,7 +31,7 @@ class Solution:
 class Solution:
     """
     Approach 1.2: Recursive DFS + Hash Table
-    time: O(m+n), where m is the edge number, m is the vertex number.
+    time: O(m+n), where m is the edge number, n is the vertex number.
     space: O(m+n) for the <graph>, O(n) for hash table <finished>,
         O(n) for function stack, totally, O(m+n).
     """
@@ -39,8 +39,8 @@ class Solution:
         graph = [[] for _ in range(numCourses)]
         finished = {}  # None: unvisited, True: unfinished, False: finished
 
-        for course, req in prerequisites:
-            graph[req].append(course)
+        for crs, req in prerequisites:
+            graph[req].append(crs)
 
         def dfs(i) -> bool:
             if i in finished:
@@ -69,9 +69,9 @@ class Solution:
         graph = [[] for _ in range(numCourses)]
         in_deg = [0 for _ in range(numCourses)]
 
-        for course, req in prerequisites:
-            graph[req].append(course)
-            in_deg[course] += 1
+        for crs, req in prerequisites:
+            graph[req].append(crs)
+            in_deg[crs] += 1
 
         queue = [i for i, deg in enumerate(in_deg) if deg == 0]
         while queue:
@@ -89,16 +89,16 @@ class Solution:
     """
     Approach 3: Topological Sort + Iterative DFS
     time: O(m+n), where m is the edge number, n is the vertex number.
-    space: O(m+n) for the reverse graph <rev_graph>, O(n) for <stack> <in_deg>
+    space:  O(m+n) for <graph>, O(n) for <stack> <in_deg>
         totally O(m+n).
     """
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         graph = [[] for _ in range(numCourses)]
         in_deg = [0 for _ in range(numCourses)]
 
-        for course, req in prerequisites:
-            graph[req].append(course)
-            in_deg[course] += 1
+        for crs, req in prerequisites:
+            graph[req].append(crs)
+            in_deg[crs] += 1
 
         stack = [i for i, deg in enumerate(in_deg) if deg == 0]
         while stack:

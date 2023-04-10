@@ -141,4 +141,3 @@ class Solution:
 
         n = len(nums)
         return topSplit(nums,0,n-1,n-k+1)
-

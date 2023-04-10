@@ -5,10 +5,9 @@ class Solution:
     """
     def largestRectangleArea(self, heights: List[ int]) -> int:
         res = 0
-        stack = []  # pair: [index,height]
+        stack = []  # [(index, height), ...]
         heights = heights + [0]
         # the ending zero could pop the all elements in the stack, avoiding iteration again
-
         for i_right, h_right in enumerate(heights):
             temp = i_right
             while stack and stack[-1][1] > h_right:
@@ -30,9 +29,9 @@ class Solution:
         heights = [0] + heights + [0]
         # the ending zero could pop the all elements in the stack, avoiding iteration again
         # the leading zero could help to solve the situation of only one element in stack
-        for i in range(len(heights)):
-            while stack and heights[stack[-1]] > heights[i]:
-                temp = stack.pop()
-                res = max(res, (i - stack[-1] - 1) * heights[temp])
-            stack.append(i)
+        for right in range(len(heights)):
+            while stack and heights[stack[-1]] > heights[right]:
+                left = stack.pop()
+                res = max(res, heights[left]*(right-stack[-1]-1))
+            stack.append(right)
         return res

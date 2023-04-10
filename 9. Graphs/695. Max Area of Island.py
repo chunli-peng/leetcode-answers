@@ -6,7 +6,7 @@ class Solution:
         totally O(mn).
     """
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(grid), len(grid[0])
         res = 0
         visited = set()
@@ -20,7 +20,7 @@ class Solution:
             ):
                 return 0
             visited.add((i, j))
-            return 1 + sum([dfs(i+di, j+dj) for (di, dj) in direction])
+            return 1 + sum([dfs(i+di, j+dj) for (di, dj) in directions])
 
         for i in range(m):
             for j in range(n):
@@ -34,7 +34,7 @@ class Solution:
     time: O(mn), space: O(mn) for function stack
     """
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(grid), len(grid[0])
         res = 0
 
@@ -46,7 +46,7 @@ class Solution:
             ):
                 return 0
             grid[i][j] = 0
-            return 1 + sum([dfs(i+di, j+dj) for (di, dj) in direction])
+            return 1 + sum([dfs(i+di, j+dj) for (di, dj) in directions])
 
         for i in range(m):
             for j in range(n):
@@ -62,7 +62,7 @@ class Solution:
         totally, O(mn).
     """
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(grid), len(grid[0])
         res = 0
         visited = set()
@@ -73,7 +73,7 @@ class Solution:
             while queue:
                 x, y = queue.pop(0)
                 temp += 1
-                for dx, dy in direction:
+                for dx, dy in directions:
                     if (
                         0 <= x+dx < m and
                         0 <= y+dy < n and
@@ -100,7 +100,7 @@ class Solution:
         totally, O(mn).
     """
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(grid), len(grid[0])
         res = 0
         visited = set()
@@ -111,7 +111,7 @@ class Solution:
             while stack:
                 x, y = stack.pop()
                 temp += 1
-                for dx, dy in direction:
+                for dx, dy in directions:
                     if (
                         0 <= x+dx < m and
                         0 <= y+dy < n and

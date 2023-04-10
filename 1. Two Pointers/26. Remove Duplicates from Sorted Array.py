@@ -14,9 +14,10 @@ class Solution:
                 k += 1
         return k
 
+
 class Solution:
     """
-    Approach 2: Fast-slow Pointers
+    Approach 1.2: Two Pointers (alternative code)
     time: O(n), space: O(1)
     """
     def removeDuplicates(self, nums: List[int]) -> int:

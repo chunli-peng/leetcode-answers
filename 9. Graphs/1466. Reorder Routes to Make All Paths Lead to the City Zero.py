@@ -7,7 +7,7 @@ class Solution:
     """
     def minReorder(self, n: int, connections: List[List[int]]) -> int:
         edges = {(prev, next) for prev, next in connections}
-        neighbors = {city:[] for city in range(n)}
+        neighbors = {city: [] for city in range(n)}
         visited = set([0])
         res = 0
 

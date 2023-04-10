@@ -6,7 +6,7 @@ class Solution:
         totally O(mn).
     """
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(heights), len(heights[0])
         res = []
         pacific, atlantic = set(), set()
@@ -20,7 +20,7 @@ class Solution:
             ):
                 return
             visited.add((i, j))
-            for di, dj in direction:
+            for di, dj in directions:
                 dfs(i+di, j+dj, visited, heights[i][j])
 
         for j in range(n):
@@ -46,7 +46,7 @@ class Solution:
         totally, O(mn).
     """
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(heights), len(heights[0])
         res = []
         pacific, atlantic = set(), set()
@@ -56,7 +56,7 @@ class Solution:
             visited.add((i, j))
             while queue:
                 x, y = queue.pop(0)
-                for dx, dy in direction:
+                for dx, dy in directions:
                     if (
                         0 <= x+dx < m and
                         0 <= y+dy < n and
@@ -89,7 +89,7 @@ class Solution:
         totally, O(mn).
     """
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(heights), len(heights[0])
         res = []
         pacific, atlantic = set(), set()
@@ -99,7 +99,7 @@ class Solution:
             visited.add((i, j))
             while stack:
                 x, y = stack.pop()
-                for dx, dy in direction:
+                for dx, dy in directions:
                     if (
                         0 <= x+dx < m and
                         0 <= y+dy < n and

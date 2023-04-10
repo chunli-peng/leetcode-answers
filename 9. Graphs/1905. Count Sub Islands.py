@@ -6,7 +6,7 @@ class Solution:
         totally O(mn).
     """
     def countSubIslands(self, grid1: List[List[int]], grid2: List[List[int]]) -> int:
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(grid1), len(grid1[0])
         res = 0
         visited = set()
@@ -21,7 +21,7 @@ class Solution:
                 return True
             visited.add((i, j))
             flag = False if grid1[i][j] == 0 else True
-            for di, dj in direction:
+            for di, dj in directions:
                 flag = dfs(i+di, j+dj) and flag
             return flag
 
@@ -40,7 +40,7 @@ class Solution:
         totally, O(mn).
     """
     def countSubIslands(self, grid1: List[List[int]], grid2: List[List[int]]) -> int:
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(grid1), len(grid1[0])
         res = 0
         visited = set()
@@ -52,7 +52,7 @@ class Solution:
             while queue:
                 x, y = queue.pop(0)
                 flag = (grid1[x][y] == 1) and flag
-                for dx, dy in direction:
+                for dx, dy in directions:
                     if (
                         0 <= x+dx < m and
                         0 <= y+dy < n and
@@ -78,7 +78,7 @@ class Solution:
         totally, O(mn).
     """
     def countSubIslands(self, grid1: List[List[int]], grid2: List[List[int]]) -> int:
-        direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         m, n = len(grid1), len(grid1[0])
         res = 0
         visited = set()
@@ -90,7 +90,7 @@ class Solution:
             while stack:
                 x, y = stack.pop()
                 flag = (grid1[x][y] == 1) and flag
-                for dx, dy in direction:
+                for dx, dy in directions:
                     if (
                         0 <= x+dx < m and
                         0 <= y+dy < n and
