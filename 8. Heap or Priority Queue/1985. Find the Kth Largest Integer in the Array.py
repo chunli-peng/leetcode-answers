@@ -2,7 +2,7 @@ class Solution:
     """
     Approach 1: Min Heap + string to int
     time: O(n) for heapify() in Python, O(klogn) for heappop()
-        totally, O(n+klogn)
+        totally, O(n+klogn), which < O(nlogn)
     space: O(n)
     """
     def kthLargestNumber(self, nums: List[str], k: int) -> str:

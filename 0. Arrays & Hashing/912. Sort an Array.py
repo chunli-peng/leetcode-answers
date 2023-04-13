@@ -1,9 +1,9 @@
 class Solution:
     """
     Approach 1: Quick Sort (Partition-exchange Sort) (Unaccepted)
-    detail: traditional quick sort cannot pass the case with many duplicates.
+    detail: Exceeded time limit, traditional quick sort cannot pass the case with many duplicates.
     time: average: O(nlogn), worst: O(n^2), best: O(nlogn)
-    space: average: O(logn), worst: O(n), best: O(logn)
+    space: average: O(logn), worst: O(n), best: O(logn) for function stack
     Requirement: time: O(nlogn)
     """
     def sortArray(self, nums: List[int]) -> List[int]:
@@ -13,17 +13,12 @@ class Solution:
     def _partition(self, arr, low, high):
         """Return the pivot index after partition."""
         pivot = arr[low]  # choose arr[low] as the pivot
-        left, right = low, high
-        while left < right:
-            # find the element smaller than pivot from right:
-            while left < right and arr[right] >= pivot:
-                right -= 1
-            arr[left] = arr[right]
-            # find the element bigger than pivot from left:
-            while left < right and arr[left] <= pivot:
+        left = low
+        for right in range(low+1, high+1):
+            if arr[right] < pivot:
+                arr[left+1], arr[right] = arr[right], arr[left+1]
                 left += 1
-            arr[right] = arr[left]
-        arr[left] = pivot  # left = right
+        arr[low], arr[left] = arr[left], arr[low]
         return left
 
     def _random_partition(self, arr, low, high):
@@ -36,7 +31,7 @@ class Solution:
         """Sort the array by Divide and Conquer."""
         if low >= high:
             return
-        # mid = partition(arr, low, high)       # nonrandom
+        # mid = self._partition(arr, low, high)  # nonrandom
         mid = self._random_partition(arr, low, high)   # random
         self._quick_sort(arr, low, mid-1)
         self._quick_sort(arr, mid+1, high)
@@ -99,11 +94,20 @@ class Solution:
         self._heap_sort(nums)
         return nums
 
-    def _heapify(self, heap):
-        for i in range(len(heap)-1, -1, -1):
+    def _heap_sort(self, nums):
+        n = len(nums)
+        self._max_heapify(nums, 0, n)
+        for i in range(n-1, -1, -1):
+            nums[i], nums[0] = nums[0], nums[i]
+            self._max_heappop(nums, 0, i)
+
+    def _max_heapify(self, heap, root, heap_len):
+        """Build a max heap."""
+        for i in range(heap_len-1, -1, root-1):
             self._max_heappop(heap, i, len(heap))
 
     def _max_heappop(self, heap, root, heap_len):
+        """Pop the maximum to the top of heap"""
         cur = root
         while cur*2+1 < heap_len:
             left, right = cur*2+1, cur*2+2
@@ -116,12 +120,6 @@ class Solution:
                 cur = nex
             else:
                 break
-
-    def _heap_sort(self, nums):
-        self._heapify(nums)
-        for i in range(len(nums)-1, -1, -1):
-            nums[i], nums[0] = nums[0], nums[i]
-            self._max_heappop(nums, 0, i)
 
 
 class Solution:

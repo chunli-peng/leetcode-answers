@@ -1,7 +1,9 @@
 class Solution:
     """
     Approach 1: Heap Sort by Min Heap (built-in func)
-    time: O(n) for heapify() in Python, space: O(1)
+    time: O(n) for heapify() in Python, O(klogn) for heappop()
+        totally, O(n+klogn), which < O(nlogn)
+    space: O(1)
     Requirement: time: O(n)
     """
     def findKthLargest(self, nums: List[int], k: int) -> int:
@@ -15,7 +17,8 @@ class Solution:
 class Solution:
     """
     Approach 1.2: Heap Sort by Max heap (built-in func)
-    time: O(n) for heapify() in Python, space: O(n)
+    time: O(n) for heapify() in Python, O(klogn) for heappop()
+    space: O(1)
     Requirement: time: O(n)
     """
     def findKthLargest(self, nums: List[int], k: int) -> int:
@@ -29,115 +32,78 @@ class Solution:
 class Solution:
     """
     Approach 1.3: Heap Sort (user-builted func)
-    time: O(nlogn) for heapify, O(klogn) for adjust
-        totally, O(nlogn)
+    time:  O(klogk) for building a heap, O((n-k)logk) for pushing,
+        totally, O(nlogk)
     space: O(1)
     """
     def findKthLargest(self, nums: List[int], k: int) -> int:
         n = len(nums)
-        self._max_heapify(nums, n)  # build a max heap
+        # build the min heap with size of k
+        self._min_heapify(nums, 0, k)
 
-        for j in range(n-1, n-k-1, -1):  # pop k-1 times from heap
-            nums[0], nums[j] = nums[j], nums[0]  # storing top element in bottom
-            self._max_heap_adjust(nums, 0, j-1)  # rebuild max heap
-        return nums[-k]
+        # push the remains to the heap
+        for i in range(k, n):
+            if nums[i] > nums[0]:
+                nums[i], nums[0] = nums[0], nums[i]
+                self._min_heappop(nums, 0, k)
+        return nums[0]
 
-    def _max_heapify(self, arr: List[int], n: int) -> List[int]:
-        """Build max heap, heap is a full binary tree"""
-        for i in range(n//2-1, -1, -1):  # build a max heap by bottom up
-            self._max_heap_adjust(arr, i, n-1)
+    def _min_heapify(self, heap, root, heap_len):
+        """Build a min heap."""
+        for i in range(heap_len-1, -1, root-1):
+            self._min_heappop(heap, i, heap_len)
 
-    def _max_heap_adjust(self, arr: List[int], top: int, end: int) -> List[int]:
-        """Adjust the max heap by Moving the top element down"""
-        i = top
-        j = 2*i + 1  # <j> is the left leaf of the root <i>
-        while j <= end:
-            if j+1 <= end and arr[j+1] > arr[j]:  # choose the largest leaf
-                j += 1
-
-            if arr[i] < arr[j]:  # if parent is smaller than children
-                arr[i], arr[j] = arr[j], arr[i]  # exchange
-                i = j  # pointer move down
-                j = 2*i + 1
+    def _min_heappop(self, heap, root, heap_len):
+        """Pop the minimum to the top of heap."""
+        cur = root
+        while cur*2+1 < heap_len:
+            left, right = cur*2+1, cur*2+2
+            if heap_len <= right or heap[left] < heap[right]:
+                nex = left
+            else:
+                nex = right
+            if heap[cur] > heap[nex]:
+                heap[cur], heap[nex] = heap[nex], heap[cur]
+                cur = nex
             else:
                 break
 
 
 class Solution:
     """
-    unfinished
-    Approach 2: QuickSelect
-    Time Complexity:
-        - Best Case: O(n)
-        - Average Case: O(n)
-        - Worst Case: O(n^2)
-    Extra Space Complexity: O(1)
+    Approach 2: Quick Select
+    time: average: O(n), worst: O(n^2), best: O(n)
+    space: average: O(logn), worst: O(n), best: O(logn)
     Requirement: time: O(n)
     """
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        k = len(nums) - k
-        left, right = 0, len(nums) - 1
+        self._quick_select(nums, 0, len(nums)-1, k)
+        return nums[k-1]
 
-        while left < right:
-            pivot = self._partition(nums, left, right)
+    def _partition(self, arr, low, high):
+        """Return the pivot index after partition."""
+        pivot = arr[low]  # choose arr[low] as the pivot
+        left = low
+        for right in range(low+1, high+1):
+            if arr[right] > pivot:
+                arr[left+1], arr[right] = arr[right], arr[left+1]
+                left += 1
+        arr[low], arr[left] = arr[left], arr[low]
+        return left
 
-            if pivot < k:
-                left = pivot + 1
-            elif pivot > k:
-                right = pivot - 1
-            else:
-                break
-        return nums[k]
+    def _random_partition(self, arr, low, high):
+        """Randomly choose pivot by swapping."""
+        pivot_idx = random.randint(low, high)  # Random choose pivot
+        arr[low], arr[pivot_idx] = arr[pivot_idx], arr[low]
+        return self._partition(arr, low, high)
 
-    def _partition(self, nums: List[int], left: int, right: int) -> int:
-        pivot, fill = nums[right], left
-
-        for i in range(left, right):
-            if nums[i] <= pivot:
-                nums[fill], nums[i] = nums[i], nums[fill]
-                fill += 1
-        nums[fill], nums[right] = nums[right], nums[fill]
-        return fill
-
-
-class Solution:
-    """
-    Approach 3: QuickSelect
-    Time Complexity:
-        - Best Case: O(n)
-        - Average Case: O(n)
-        - Worst Case: O(n^2)
-    Extra Space Complexity: O(1)
-    Requirement: time: O(n)
-    https://leetcode.cn/problems/kth-largest-element-in-an-array/solution/by-flix-amc8/
-    """
-    def findKthLargest(self, nums: List[int], k: int) -> int:
-        def partition(arr:List[int], low:int, high:int)-> int:
-            pivot = arr[low]
-            left, right = low, high
-            while left < right:
-                while left<right and pivot <= arr[right]:
-                    right -= 1
-                arr[left] = arr[right]
-                while left<right and pivot >= arr[left]:
-                    left += 1
-                arr[right] = arr[left]
-            arr[left] = pivot
-            return left
-
-        def randomPartition(arr:List[int], low:int, high:int)-> int:
-            pivot_index = random.randint(low,high)
-            arr[low], arr[pivot_index] = arr[pivot_index], arr[low]
-            return partition(arr,low,high)
-
-        def topSplit(arr:List[int], low:int, high:int, k:int)-> int:
-            mid = randomPartition(arr,low,high)
-            if mid == k-1:
-                return arr[mid]
-            elif mid < k-1:
-                return topSplit(arr, mid+1, high, k)
-            else:
-                return topSplit(arr, low, mid-1, k)
-
-        n = len(nums)
-        return topSplit(nums,0,n-1,n-k+1)
+    def _quick_select(self, arr, low, high, k):
+        """Sort the array by Divide and Conquer."""
+        if low >= high:
+            return
+        # mid = self._partition(arr, low, high)  # nonrandom
+        mid = self._random_partition(arr, low, high)   # random
+        if mid < k-1:
+            self._quick_select(arr, mid+1, high, k)
+        elif mid > k-1:
+            self._quick_select(arr, low, mid-1, k)
