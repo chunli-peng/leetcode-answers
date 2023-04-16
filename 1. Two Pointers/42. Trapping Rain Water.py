@@ -7,7 +7,7 @@ class Solution:
         n = len(height)
         left_max = [height[0]] + [0]*(n-1)
         right_max = [0]*(n-1) + [height[n-1]]
-        for i in range(1,n):
+        for i in range(1, n):
             left_max[i] = max(left_max[i-1], height[i])
             right_max[n-1-i] = max(right_max[n-1-i+1], height[n-1-i])
         res = sum(min(left_max[i], right_max[i]) - height[i] for i in range(n))
