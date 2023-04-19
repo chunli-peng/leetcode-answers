@@ -1,7 +1,8 @@
 class Solution:
     """
     Approach 1: Bit Manipulation + Bit Mask
-    time: O(n*2^n) for filling <hashtable>, O(2^(n/2)*2^(n/2))=O(2^n) for calculate the result
+    time: O(n*2^n) for filling <hashtable>,
+        O(2^(n/2)*2^(n/2))=O(2^n) for calculate the result，
         totally, O(n*2^n)
     space: O(2^(n/2))
     """

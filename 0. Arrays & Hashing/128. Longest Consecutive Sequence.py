@@ -14,4 +14,3 @@ class Solution:
                     cur_len += 1
                 res = max(res, cur_len)
         return res
-    

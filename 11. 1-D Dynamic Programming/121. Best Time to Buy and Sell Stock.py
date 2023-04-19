@@ -25,4 +25,3 @@ class Solution:
             curr = max(curr+delta, delta)
             res = max(curr, res)
         return res
-    
