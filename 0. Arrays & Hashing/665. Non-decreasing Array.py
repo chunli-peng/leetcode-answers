@@ -9,9 +9,7 @@ class Solution:
             if nums[i] > nums[i+1]:
                 if count > 0:
                     return False
-                if i == 0 or nums[i-1] <= nums[i+1]:
-                    nums[i] = nums[i+1]
-                else:
+                if i > 0 and nums[i-1] > nums[i+1]:
                     nums[i+1] = nums[i]
                 count += 1
         return True
