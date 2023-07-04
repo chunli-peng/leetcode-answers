@@ -93,7 +93,7 @@ class Solution:
             return ''
 
         trie = []  # [{}, ...]
-        min_index = float('inf')
+        min_index = float('')
         for word in strs:
             for i, ch in enumerate(word):
                 if len(trie) <= i:

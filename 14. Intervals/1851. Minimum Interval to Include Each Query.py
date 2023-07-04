@@ -24,3 +24,13 @@ class Solution:
             res[que] = min_heap[0][0] if min_heap else -1
 
         return [res[que] for que in queries]
+
+
+class Solution:
+    """
+    Approach 1: 离线算法
+    unfinished
+    https://leetcode.cn/problems/minimum-interval-to-include-each-query/solutions/755628/bao-han-mei-ge-cha-xun-de-zui-xiao-qu-ji-e21j/?orderBy=most_votes
+    """
+    def minInterval(self, intervals: List[List[int]], queries: List[int]) -> List[int]:
+
