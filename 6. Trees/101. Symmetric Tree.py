@@ -37,6 +37,30 @@ class Solution:
         if not root or (not root.left and not root.right):
             return True
 
+        stack = [(root.left, root.right)]
+        while stack:
+            left, right = stack.pop()
+            if not left and not right:
+                continue
+            if not left or not right:
+                return False
+            if left.val != right.val:
+                return False
+            stack.append((left.right, right.left))
+            stack.append((left.left, right.right))
+        return True
+
+
+class Solution:
+    """
+    Approach 2: BFS
+    time: O(n), space: O(n)
+    Follow-up requirement: Could you solve it both recursively and iteratively?
+    """
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        if not root or (not root.left and not root.right):
+            return True
+
         queue = [(root.left, root.right)]
         while queue:
             left, right = queue.pop(0)

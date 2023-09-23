@@ -32,17 +32,20 @@ class Solution:
 
         root = TreeNode(preorder[0])
         stack = [root]
-        index_inoder = 0
+        idx_inoder = 0
+
         for i in range(1, len(preorder)):
-            node_val = preorder[i]
+            child_val = preorder[i]
             node = stack[-1]
-            if node.val != inorder[index_inoder]:
-                node.left = TreeNode(node_val)
+            if node.val != inorder[idx_inoder]:
+                # construct left subtree at first
+                node.left = TreeNode(child_val)
                 stack.append(node.left)
             else:
-                while stack and stack[-1].val == inorder[index_inoder]:
+                # construct right subtree
+                while stack and stack[-1].val == inorder[idx_inoder]:
                     node = stack.pop()
-                    index_inoder += 1
-                node.right = TreeNode(node_val)
+                    idx_inoder += 1
+                node.right = TreeNode(child_val)
                 stack.append(node.right)
         return root
